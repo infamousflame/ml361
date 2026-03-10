@@ -1,6 +1,7 @@
 use pyo3::prelude::*;
 
 pub mod datatable;
+pub mod model;
 mod dt_pybinds;
 
 use crate::dt_pybinds::{ColumnPy, DataTablePy};
