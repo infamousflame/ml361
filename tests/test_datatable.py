@@ -168,3 +168,11 @@ def test_datatable_errors():
     # Invalid column name
     with pytest.raises(IndexError):
         dt["nonexistent", 0]
+
+
+def test_datatable_get_col_names_and_types():
+    names = ["id", "name"]
+    types = ["int", "str"]
+    dt = DataTable(names, types)
+    assert dt.get_colnames() == names
+    assert dt.get_coltypes() == types

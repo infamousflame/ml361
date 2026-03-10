@@ -267,4 +267,14 @@ impl DataTablePy {
     fn __str__(&self) -> String {
         self.inner.format()
     }
+
+    /// Returns the column names in the DataTable
+    fn get_colnames(&self) -> Vec<String> {
+        self.inner.get_colnames()
+    }
+
+    /// Returns the column types in the DataTable
+    fn get_coltypes(&self) -> Vec<String> {
+        self.inner.get_coltypes()
+    }
 }
