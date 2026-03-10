@@ -2,6 +2,7 @@
 
 use pyo3::prelude::*;
 
+pub mod dataman;
 pub mod datatable;
 pub mod model;
 mod dt_pybinds;
