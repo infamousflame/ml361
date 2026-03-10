@@ -1,3 +1,5 @@
+/// A Python Machine Learning Library implemented in Rust.
+
 use pyo3::prelude::*;
 
 pub mod datatable;

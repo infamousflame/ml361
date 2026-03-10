@@ -1,3 +1,5 @@
+/// Contains structures used to store data.
+
 use std::collections::HashMap;
 
 /// A value to be stored or retrieved from a DataTable column
