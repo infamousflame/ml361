@@ -239,3 +239,30 @@ fn test_datatable_format() {
     assert!(formatted.contains("id\tactive\n"));
     assert!(formatted.contains("1\ttrue\n"));
 }
+
+#[test]
+fn test_datatable_get_colnames() {
+    let names0 = vec!["id", "name"];
+    let types0 = vec!["int", "str"];
+    let dt0 = DataTable::new(&names0, &types0).unwrap();
+    let colnames0: Vec<String> = dt0.get_colnames();
+    assert_eq!(colnames0.len(), 2);
+    assert_eq!(colnames0[0], "id");
+    assert_eq!(colnames0[1], "name");
+    let names1: Vec<&str> = vec![];
+    let types1: Vec<&str> = vec![];
+    let dt1 = DataTable::new(&names1, &types1).unwrap();
+    let colnames1: Vec<String> = dt1.get_colnames();
+    assert_eq!(colnames1.len(), 0);
+}
+
+#[test]
+fn test_datatable_get_coltypes() {
+    let names = vec!["id", "name"];
+    let types = vec!["int", "str"];
+    let dt = DataTable::new(&names, &types).unwrap();
+    let coltypes: Vec<String> = dt.get_coltypes();
+    assert_eq!(coltypes.len(), 2);
+    assert_eq!(coltypes[0], "int");
+    assert_eq!(coltypes[1], "str");
+}

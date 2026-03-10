@@ -187,6 +187,16 @@ impl Column {
             Column::Str(values) => format!("{:?}", values),
         }
     }
+
+    /// Returns the type of the column as a string
+    pub fn get_type(&self) -> &'static str {
+        match self {
+            Column::Int(_) => "int",
+            Column::Float(_) => "float",
+            Column::Bool(_) => "bool",
+            Column::Str(_) => "str",
+        }
+    }
 }
 
 impl DataTable {
@@ -309,6 +319,19 @@ impl DataTable {
             return 0;
         }
         self.columns[0].1.len()
+    }
+
+    /// Returns the column names in the DataTable
+    pub fn get_colnames(&self) -> Vec<String> {
+        self.columns.iter().map(|(name, _)| name.clone()).collect()
+    }
+
+    /// Returns the column types in the DataTable
+    pub fn get_coltypes(&self) -> Vec<String> {
+        self.columns
+            .iter()
+            .map(|(_, col)| col.get_type().to_string())
+            .collect()
     }
 
     /// Formats the DataTable as a string for display
