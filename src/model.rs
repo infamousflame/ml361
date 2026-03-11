@@ -1,5 +1,4 @@
 /// Useful model-related traits.
-
 use crate::datatable::{Column, DataTable, Value};
 
 pub trait SupervisedModel {

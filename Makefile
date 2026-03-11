@@ -13,8 +13,8 @@ test: build
 
 # Format the code with an 80-character limit
 format:
-	rustfmt --config max_width=80 *.rs
-	ruff format --line-length 80 *.py
+	rustfmt --config max_width=80 */*.rs
+	ruff format --line-length 80 */*.py
 
 # Clean build artifacts
 clean:

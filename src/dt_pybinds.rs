@@ -1,5 +1,4 @@
 /// Contains bindings for the `datatable` module.
-
 use crate::datatable::{Column, DataTable, Value};
 use pyo3::exceptions::{PyIndexError, PyTypeError, PyValueError};
 use pyo3::prelude::*;

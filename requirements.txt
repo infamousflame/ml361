@@ -1,6 +1,8 @@
 iniconfig==2.3.0
 maturin==1.12.6
+-e git+ssh://git@github.com/infamousflame/ml361@fd3cc692d2ce2863310f1bb6bc17c9f55cdb31d8#egg=ml361
 packaging==26.0
 pluggy==1.6.0
 Pygments==2.19.2
 pytest==9.0.2
+ruff==0.15.5

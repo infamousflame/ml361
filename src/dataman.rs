@@ -1,5 +1,4 @@
 /// Module for manipulating data.
-
 use rand::rngs::StdRng;
 use rand::seq::SliceRandom;
 use rand::SeedableRng;
@@ -31,10 +30,10 @@ pub fn train_test_split(
     let colnames_str: Vec<&str> = colnames.iter().map(|s| s.as_str()).collect();
     let coltypes_str: Vec<&str> = coltypes.iter().map(|s| s.as_str()).collect();
 
-    let mut train_data =
-        DataTable::new(&colnames_str, &coltypes_str).expect("Failed to create train DataTable");
-    let mut test_data =
-        DataTable::new(&colnames_str, &coltypes_str).expect("Failed to create test DataTable");
+    let mut train_data = DataTable::new(&colnames_str, &coltypes_str)
+        .expect("Failed to create train DataTable");
+    let mut test_data = DataTable::new(&colnames_str, &coltypes_str)
+        .expect("Failed to create test DataTable");
 
     for &i in train_indices {
         train_data
