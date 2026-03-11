@@ -11,7 +11,7 @@ pub fn train_test_split(
     seed: Option<u64>,
 ) -> (DataTable, DataTable) {
     let total_rows = data.len();
-    let test_count = (total_rows as f64 * test_size).round() as usize;
+    let test_count = (total_rows as f64 * test_size).round_ties_even() as usize;
 
     let mut indices: Vec<usize> = (0..total_rows).collect();
 
