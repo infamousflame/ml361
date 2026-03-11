@@ -10,7 +10,6 @@ pub mod model;
 use crate::dm_pybinds::train_test_split_py;
 use crate::dt_pybinds::{ColumnPy, DataTablePy};
 
-/// A Python module implemented in Rust.
 fn pymod_datatable(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<ColumnPy>()?;
     m.add_class::<DataTablePy>()?;

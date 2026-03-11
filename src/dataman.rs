@@ -25,37 +25,19 @@ pub fn train_test_split(
 
     let (test_indices, train_indices) = indices.split_at(test_count);
 
-    let colnames = data.get_colnames();
-    let coltypes = data.get_coltypes();
-    let colnames_str: Vec<&str> = colnames.iter().map(|s| s.as_str()).collect();
-    let coltypes_str: Vec<&str> = coltypes.iter().map(|s| s.as_str()).collect();
+    let colnames_str: Vec<&str> =
+        data.get_colnames().iter().map(|s| s.as_str()).collect();
+    let coltypes_str: Vec<&str> =
+        data.get_coltypes().iter().map(|s| s.as_str()).collect();
 
-    let mut train_data = match DataTable::new(&colnames_str, &coltypes_str) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
-    let mut test_data = match DataTable::new(&colnames_str, &coltypes_str) {
-        Ok(d) => d,
-        Err(e) => return Err(e),
-    };
+    let mut train_data = DataTable::new(&colnames_str, &coltypes_str)?;
+    let mut test_data = DataTable::new(&colnames_str, &coltypes_str)?;
 
     for &i in train_indices {
-        let row = match data.get_row(i) {
-            Ok(r) => r,
-            Err(e) => return Err(e),
-        };
-        if let Err(e) = train_data.append(row) {
-            return Err(e);
-        }
+        train_data.append(data.get_row(i)?)?;
     }
     for &i in test_indices {
-        let row = match data.get_row(i) {
-            Ok(r) => r,
-            Err(e) => return Err(e),
-        };
-        if let Err(e) = test_data.append(row) {
-            return Err(e);
-        }
+        test_data.append(data.get_row(i)?)?;
     }
 
     Ok((train_data.into(), test_data.into()))

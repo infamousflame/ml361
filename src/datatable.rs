@@ -114,7 +114,11 @@ impl Column {
     }
 
     /// Sets the value at the specified index
-    pub fn set(&mut self, index: usize, value: &Value) -> Result<(), &'static str> {
+    pub fn set(
+        &mut self,
+        index: usize,
+        value: &Value,
+    ) -> Result<(), &'static str> {
         if index >= self.len() {
             return Err("Index out of bounds");
         }
@@ -275,7 +279,11 @@ impl DataTable {
 
     /// Returns a reference to the value at the specified column and row indices
     /// if they exist
-    pub fn get(&self, col_name: &str, row_index: usize) -> Result<Value, &'static str> {
+    pub fn get(
+        &self,
+        col_name: &str,
+        row_index: usize,
+    ) -> Result<Value, &'static str> {
         if let Ok(column) = self.get_col(col_name) {
             column.get(row_index)
         } else {
@@ -284,7 +292,10 @@ impl DataTable {
     }
 
     /// Returns a row from the DataTable as a vector of values
-    pub fn get_row(&self, row_index: usize) -> Result<Vec<Value>, &'static str> {
+    pub fn get_row(
+        &self,
+        row_index: usize,
+    ) -> Result<Vec<Value>, &'static str> {
         let mut row: Vec<Value> = Vec::new();
         for (_, column) in self.columns.iter() {
             match column.get(row_index) {
