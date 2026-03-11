@@ -15,7 +15,7 @@ fn create_sample_datatable(rows: usize) -> DataTable {
 #[test]
 fn test_train_test_split_sizes() {
     let dt = create_sample_datatable(100);
-    let (train, test) = train_test_split(&dt, 0.2, Some(42));
+    let (train, test) = train_test_split(&dt, 0.2, Some(42)).unwrap();
 
     // For a 0.2 split on 100 rows, we expect 20 in test and 80 in train
     assert_eq!(test.len(), 20);
@@ -32,8 +32,8 @@ fn test_train_test_split_sizes() {
 #[test]
 fn test_train_test_split_determinism() {
     let dt = create_sample_datatable(100);
-    let (train1, test1) = train_test_split(&dt, 0.2, Some(123));
-    let (train2, test2) = train_test_split(&dt, 0.2, Some(123));
+    let (train1, test1) = train_test_split(&dt, 0.2, Some(123)).unwrap();
+    let (train2, test2) = train_test_split(&dt, 0.2, Some(123)).unwrap();
 
     // If a seed is provided, the splits should be identical
     let ids1_test: Vec<Value> = test1.get_col("id").unwrap().iter().collect();
@@ -48,8 +48,7 @@ fn test_train_test_split_determinism() {
 #[test]
 fn test_train_test_split_all_test() {
     let dt = create_sample_datatable(10);
-    let (train, test) = train_test_split(&dt, 1.0, Some(42));
-
+    let (train, test) = train_test_split(&dt, 1.0, Some(42)).unwrap();
     assert_eq!(train.len(), 0);
     assert_eq!(test.len(), 10);
 }
@@ -57,8 +56,7 @@ fn test_train_test_split_all_test() {
 #[test]
 fn test_train_test_split_no_test() {
     let dt = create_sample_datatable(10);
-    let (train, test) = train_test_split(&dt, 0.0, Some(42));
-
+    let (train, test) = train_test_split(&dt, 0.0, Some(42)).unwrap();
     assert_eq!(train.len(), 10);
     assert_eq!(test.len(), 0);
 }
@@ -66,8 +64,7 @@ fn test_train_test_split_no_test() {
 #[test]
 fn test_train_test_split_empty() {
     let dt = create_sample_datatable(0);
-    let (train, test) = train_test_split(&dt, 0.2, Some(42));
-
+    let (train, test) = train_test_split(&dt, 0.2, Some(42)).unwrap();
     assert_eq!(train.len(), 0);
     assert_eq!(test.len(), 0);
 }
@@ -75,7 +72,7 @@ fn test_train_test_split_empty() {
 #[test]
 fn test_train_test_split_content_integrity() {
     let dt = create_sample_datatable(50);
-    let (train, test) = train_test_split(&dt, 0.3, Some(7));
+    let (train, test) = train_test_split(&dt, 0.3, Some(7)).unwrap();
 
     // Combine all IDs from train and test and verify they match the original IDs
     let mut all_ids: Vec<isize> = Vec::new();

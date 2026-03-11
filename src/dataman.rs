@@ -9,7 +9,7 @@ pub fn train_test_split(
     data: &DataTable,
     test_size: f64,
     seed: Option<u64>,
-) -> (DataTable, DataTable) {
+) -> Result<(DataTable, DataTable), &'static str> {
     let total_rows = data.len();
     let test_count = (total_rows as f64 * test_size).round_ties_even() as usize;
 
@@ -30,21 +30,33 @@ pub fn train_test_split(
     let colnames_str: Vec<&str> = colnames.iter().map(|s| s.as_str()).collect();
     let coltypes_str: Vec<&str> = coltypes.iter().map(|s| s.as_str()).collect();
 
-    let mut train_data = DataTable::new(&colnames_str, &coltypes_str)
-        .expect("Failed to create train DataTable");
-    let mut test_data = DataTable::new(&colnames_str, &coltypes_str)
-        .expect("Failed to create test DataTable");
+    let mut train_data = match DataTable::new(&colnames_str, &coltypes_str) {
+        Ok(d) => d,
+        Err(e) => return Err(e),
+    };
+    let mut test_data = match DataTable::new(&colnames_str, &coltypes_str) {
+        Ok(d) => d,
+        Err(e) => return Err(e),
+    };
 
     for &i in train_indices {
-        train_data
-            .append(data.get_row(i).expect("Failed to get row from source"))
-            .expect("Failed to append row to train_data");
+        let row = match data.get_row(i) {
+            Ok(r) => r,
+            Err(e) => return Err(e),
+        };
+        if let Err(e) = train_data.append(row) {
+            return Err(e);
+        }
     }
     for &i in test_indices {
-        test_data
-            .append(data.get_row(i).expect("Failed to get row from source"))
-            .expect("Failed to append row to test_data");
+        let row = match data.get_row(i) {
+            Ok(r) => r,
+            Err(e) => return Err(e),
+        };
+        if let Err(e) = test_data.append(row) {
+            return Err(e);
+        }
     }
 
-    (train_data, test_data)
+    Ok((train_data.into(), test_data.into()))
 }

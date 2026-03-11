@@ -50,7 +50,7 @@ impl Column {
     }
 
     /// Appends a value to the column
-    pub fn append(&mut self, value: &Value) -> Result<(), &str> {
+    pub fn append(&mut self, value: &Value) -> Result<(), &'static str> {
         match self {
             Column::Int(values) => {
                 if let Value::Int(v) = value {
@@ -88,7 +88,7 @@ impl Column {
     }
 
     /// Removes and returns a value from the column at the specified index
-    pub fn pop(&mut self, index: usize) -> Result<Value, &str> {
+    pub fn pop(&mut self, index: usize) -> Result<Value, &'static str> {
         if index >= self.len() {
             return Err("Index out of bounds");
         }
@@ -101,7 +101,7 @@ impl Column {
     }
 
     /// Returns the value at the specified index
-    pub fn get(&self, index: usize) -> Result<Value, &str> {
+    pub fn get(&self, index: usize) -> Result<Value, &'static str> {
         if index >= self.len() {
             return Err("Index out of bounds");
         }
@@ -114,7 +114,7 @@ impl Column {
     }
 
     /// Sets the value at the specified index
-    pub fn set(&mut self, index: usize, value: &Value) -> Result<(), &str> {
+    pub fn set(&mut self, index: usize, value: &Value) -> Result<(), &'static str> {
         if index >= self.len() {
             return Err("Index out of bounds");
         }
@@ -235,7 +235,7 @@ impl DataTable {
     }
 
     /// Appends a row to the DataTable
-    pub fn append(&mut self, row: Vec<Value>) -> Result<(), &str> {
+    pub fn append(&mut self, row: Vec<Value>) -> Result<(), &'static str> {
         if row.len() != self.columns.len() {
             return Err(
                 "Row must have the same number of columns as the DataTable.",
@@ -248,7 +248,7 @@ impl DataTable {
     }
 
     /// Removes and returns a row from the DataTable at the specified index
-    pub fn pop(&mut self, index: usize) -> Result<Vec<Value>, &str> {
+    pub fn pop(&mut self, index: usize) -> Result<Vec<Value>, &'static str> {
         let mut row: Vec<Value> = Vec::new();
         for (_, column) in self.columns.iter_mut() {
             row.push(column.pop(index)?);
@@ -257,7 +257,7 @@ impl DataTable {
     }
 
     /// Returns a reference to the column with the specified name, if it exists
-    pub fn get_col(&self, name: &str) -> Result<&Column, &str> {
+    pub fn get_col(&self, name: &str) -> Result<&Column, &'static str> {
         self.name_map
             .get(name)
             .map(|i| &self.columns[*i].1)
@@ -266,7 +266,7 @@ impl DataTable {
 
     /// Returns a mutable reference to the column with the specified name, if it
     /// exists
-    fn get_col_mut(&mut self, name: &str) -> Result<&mut Column, &str> {
+    fn get_col_mut(&mut self, name: &str) -> Result<&mut Column, &'static str> {
         self.name_map
             .get(name)
             .map(|i| &mut self.columns[*i].1)
@@ -275,7 +275,7 @@ impl DataTable {
 
     /// Returns a reference to the value at the specified column and row indices
     /// if they exist
-    pub fn get(&self, col_name: &str, row_index: usize) -> Result<Value, &str> {
+    pub fn get(&self, col_name: &str, row_index: usize) -> Result<Value, &'static str> {
         if let Ok(column) = self.get_col(col_name) {
             column.get(row_index)
         } else {
@@ -284,7 +284,7 @@ impl DataTable {
     }
 
     /// Returns a row from the DataTable as a vector of values
-    pub fn get_row(&self, row_index: usize) -> Result<Vec<Value>, &str> {
+    pub fn get_row(&self, row_index: usize) -> Result<Vec<Value>, &'static str> {
         let mut row: Vec<Value> = Vec::new();
         for (_, column) in self.columns.iter() {
             match column.get(row_index) {
@@ -306,7 +306,7 @@ impl DataTable {
         col_name: &str,
         row_index: usize,
         value: &Value,
-    ) -> Result<(), &str> {
+    ) -> Result<(), &'static str> {
         if let Ok(col) = self.get_col_mut(col_name) {
             col.set(row_index, value)
         } else {
