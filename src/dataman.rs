@@ -25,10 +25,12 @@ pub fn train_test_split(
 
     let (test_indices, train_indices) = indices.split_at(test_count);
 
+    let colnames = data.get_colnames();
     let colnames_str: Vec<&str> =
-        data.get_colnames().iter().map(|s| s.as_str()).collect();
+        colnames.iter().map(|s| s.as_str()).collect();
+    let coltypes = data.get_coltypes();
     let coltypes_str: Vec<&str> =
-        data.get_coltypes().iter().map(|s| s.as_str()).collect();
+        coltypes.iter().map(|s| s.as_str()).collect();
 
     let mut train_data = DataTable::new(&colnames_str, &coltypes_str)?;
     let mut test_data = DataTable::new(&colnames_str, &coltypes_str)?;
