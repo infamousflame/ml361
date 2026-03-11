@@ -1,6 +1,6 @@
 from typing import Any
 
-from ml361 import Column, DataTable
+from ml361.datatable import Column, DataTable
 
 def main():
     column_names: list[str] = ["id", "name", "score", "advanced"]

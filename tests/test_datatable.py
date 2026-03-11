@@ -1,5 +1,5 @@
 import pytest
-from ml361 import Column, DataTable
+from ml361.datatable import Column, DataTable
 
 
 def test_column_int():
