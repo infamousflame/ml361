@@ -5,6 +5,7 @@ pub mod dataman;
 pub mod datatable;
 mod dm_pybinds;
 mod dt_pybinds;
+mod dtree;
 pub mod model;
 
 use crate::dm_pybinds::train_test_split_py;
